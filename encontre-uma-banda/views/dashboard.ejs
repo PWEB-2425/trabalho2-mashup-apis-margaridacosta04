@@ -2,25 +2,32 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard - Encontre uma Banda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Encontre Uma Banda</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-<body>
-  <div class="container">
+<body class="dashboard-body">
+  <header>
     <h1>Bem-vindo, <%= user.username %>!</h1>
+    <nav>
+      <a href="/auth/logout">Sair</a>
+    </nav>
+  </header>
 
-    <form action="/search/results" method="GET" class="search-box">
-      <input
-        type="text"
-        name="q"
-        placeholder="Digite o nome da banda ou artista"
-        required
-        autocomplete="off"
-      />
+  <main>
+    <form action="/search/results" method="GET" class="search-form">
+      <input type="text" name="q" placeholder="Digite o nome da banda ou artista..." required />
       <button type="submit">Buscar</button>
     </form>
 
-    <p><a href="/auth/logout">Sair</a></p>
-  </div>
+    <% if (artistInfo) { %>
+      <!-- Renderiza info do artista -->
+      <section class="artist-info">
+        <img src="<%= artistInfo.image ? artistInfo.image : '/images/default-artist.png' %>" alt="Imagem do artista" />
+        <h2><%= artistInfo.name %></h2>
+        <p><%= artistInfo.bio %></p>
+      </section>
+    <% } %>
+  </main>
 </body>
 </html>

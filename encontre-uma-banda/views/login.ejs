@@ -2,18 +2,136 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <title>Login - Encontre uma Banda</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entrar - Encontre uma Banda</title>
+
+  <!-- Google Fonts: mesma do index -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #121212; /* preto */
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Container central */
+    .login-container {
+      background-color: #181818;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(30, 215, 96, 0.4);
+      padding: 40px 60px;
+      width: 350px;
+      text-align: center;
+    }
+
+    /* Título */
+    h1 {
+      font-size: 2.5rem;
+      color: #1DB954;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    /* Form */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      text-align: left;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 12px 15px;
+      border-radius: 30px;
+      border: none;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      outline: none;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    input::placeholder {
+      color: #ccc;
+      font-style: italic;
+    }
+
+    /* Botão */
+    button {
+      background-color: #1DB954;
+      border: none;
+      padding: 12px;
+      border-radius: 30px;
+      font-weight: 700;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+    button:hover {
+      background-color: #17a44b;
+    }
+
+    /* Link para registrar */
+    .register-link {
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+    .register-link a {
+      color: #1DB954;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .register-link a:hover {
+      color: #17a44b;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Login</h1>
+  <div class="login-container">
+    <h1>Entrar</h1>
     <form action="/auth/login" method="POST">
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Senha" required />
+      <label for="username">Nome de usuário</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Digite seu usuário"
+        required
+      />
+
+      <label for="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Digite sua senha"
+        required
+      />
+
       <button type="submit">Entrar</button>
     </form>
-    <p>Não tem conta? <a href="/auth/register">Registre-se aqui</a></p>
+
+    <div class="register-link">
+      Não tem conta? <a href="/auth/register">Registre-se aqui</a>
+    </div>
   </div>
 </body>
 </html>

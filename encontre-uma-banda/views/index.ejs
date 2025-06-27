@@ -1,40 +1,98 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bem-vindo ao Encontre uma Banda</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Encontre uma Banda</title>
+
+  <!-- Google Fonts: Montserrat para o estilo Spotify -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #121212; /* Fundo preto Spotify */
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    /* Container central */
+    .container {
+      background-color: #181818;
+      border-radius: 15px;
+      padding: 60px 80px;
+      box-shadow: 0 0 20px rgba(30, 215, 96, 0.5);
+      text-align: center;
+      width: 400px;
+    }
+
+    /* Título com efeito estético */
+    h1 {
+      font-size: 3rem;
+      color: #1DB954;
+      letter-spacing: 4px;
+      margin-bottom: 40px;
+      user-select: none;
+    }
+
+    /* Barra de pesquisa */
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 30px 0 0 30px;
+      font-size: 1.2rem;
+      outline: none;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    input::placeholder {
+      color: #999;
+      font-style: italic;
+    }
+
+    button {
+      padding: 15px 25px;
+      border: none;
+      background-color: #1DB954;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      border-radius: 0 30px 30px 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    button:hover {
+      background-color: #17a44b;
+    }
+  </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">
-      <a href="/">Encontre uma Banda</a>
-    </div>
-    <nav>
-      <ul>
-        <% if (user) { %>
-          <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/logout">Sair</a></li>
-        <% } else { %>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Registrar</a></li>
-        <% } %>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="main-content">
-    <h1>Bem-vindo ao Encontre uma Banda</h1>
-    <% if (user) { %>
-      <p>Olá, <%= user.username %>!</p>
-    <% } else { %>
-      <p>Faça login ou registre-se para começar a encontrar bandas.</p>
-    <% } %>
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2025 Encontre uma Banda. Todos os direitos reservados.</p>
-  </footer>
+  <div class="container">
+    <h1>ENCONTRE UMA BANDA</h1>
+    <form action="/search/results" method="GET">
+      <input type="text" name="q" placeholder="Digite o nome da banda" required />
+      <button type="submit">Buscar</button>
+    </form>
+  </div>
 </body>
 </html>

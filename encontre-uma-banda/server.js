@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URL, {
 // --- Configurações Express ---
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('public')); // Pasta pública para CSS, JS, imagens
 
 // --- Configuração de sessão ---
 app.use(session({
@@ -37,41 +37,40 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// --- Middleware para tornar `user` disponível nas views ---
+// Middleware para deixar user disponível nas views
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
 
-// --- Importa rotas ---
+// Importa rotas
 const authRoutes = require('./routes/auth');
 const searchRoutes = require('./routes/search');
 
-// --- Usa as rotas ---
-app.use('/auth', authRoutes);
+// **IMPORTANTE: rotas auth sem prefixo para acesso direto em /login, /register**
+app.use('/', authRoutes);
 app.use('/search', searchRoutes);
 
-// --- Rota inicial ---
+// Rota inicial
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-// --- Middleware para proteger rotas ---
+// Middleware para proteger rotas
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated && req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/auth/login');
+  res.redirect('/login'); // Ajustado para refletir rota sem prefixo
 }
 
-// --- Rota dashboard protegida ---
+// Dashboard protegido
 app.get('/dashboard', ensureAuthenticated, (req, res) => {
   res.render('dashboard', { user: req.user, artistInfo: null });
 });
 
-// --- Iniciar servidor ---
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
-
