@@ -14,15 +14,12 @@ router.post('/register', async (req, res, next) => {
     const { username, password } = req.body;
     const user = new User({ username });
     const registeredUser = await User.register(user, password);
-
-    // Loga o usuário automaticamente após registro
     req.login(registeredUser, err => {
       if (err) return next(err);
       res.redirect('/dashboard');
     });
   } catch (e) {
-    // Pode ser melhor renderizar a página com erro, mas isso já ajuda
-    res.send('Erro no registro: ' + e.message);
+    res.status(400).send('Erro no registro: ' + e.message);
   }
 });
 
@@ -31,15 +28,16 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-// Login (autenticação local)
+// Login
 router.post('/login',
   passport.authenticate('local', {
     successRedirect: '/dashboard',
-    failureRedirect: '/login'
+    failureRedirect: '/auth/login',
+    failureFlash: false
   })
 );
 
-// Logout (atualizado para async)
+// Logout
 router.get('/logout', (req, res, next) => {
   req.logout(function(err) {
     if (err) return next(err);
@@ -48,4 +46,3 @@ router.get('/logout', (req, res, next) => {
 });
 
 module.exports = router;
-

@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
   ]
 });
 
-// Adiciona métodos e campos para autenticação (senha hash, salt, etc)
+// Integra passport-local-mongoose para criar automaticamente
+// campos de hash e salt, além de métodos auxiliares para autenticação
 userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', userSchema);

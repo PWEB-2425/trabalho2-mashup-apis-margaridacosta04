@@ -2,45 +2,48 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <title><%= artist ? artist.name : 'Resultados' %> - Encontre uma Banda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resultados - <%= artistInfo ? artistInfo.name : 'Artista não encontrado' %></title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-<body>
-  <div class="container">
+<body class="dashboard-body">
+  <main class="container">
+
     <% if (error) { %>
-      <p style="color:#ff4d4d; text-align:center; margin-bottom:20px;"><%= error %></p>
-    <% } %>
-
-    <% if (artist) { %>
-      <div class="artist-header">
+      <p class="error"><%= error %></p>
+    <% } else if (artistInfo) { %>
+      <h1><%= artistInfo.name %></h1>
+      
+      <div class="artist-container">
         <% if (artistImage) { %>
-          <img src="<%= artistImage %>" alt="<%= artist.name %>" />
+          <img src="<%= artistImage %>" alt="Foto do artista <%= artistInfo.name %>" />
         <% } else { %>
-          <div style="width:150px; height:150px; background:#333; border-radius:75px;"></div>
+          <p>Imagem não disponível.</p>
         <% } %>
-        <h1><%= artist.name %></h1>
+
+        <div class="artist-bio">
+          <p><%- artistInfo.bio ? artistInfo.bio.summary : 'Biografia não disponível.' %></p>
+          <% if (artistInfo.link) { %>
+            <p><a href="<%= artistInfo.link %>" target="_blank" rel="noopener noreferrer">Perfil Deezer</a></p>
+          <% } %>
+        </div>
       </div>
 
-      <h2>Vídeos</h2>
-      <div class="videos">
-        <% videos.forEach(video => { %>
-          <div class="video">
-            <iframe
-              src="https://www.youtube.com/embed/<%= video.id.videoId %>"
-              allowfullscreen
-              title="<%= video.snippet.title %>"
-            ></iframe>
-            <p><%= video.snippet.title %></p>
-          </div>
-        <% }) %>
+      <h2>Videoclipes</h2>
+      <div class="videos-container">
+        <% if (videos && videos.length > 0) { %>
+          <% videos.forEach(video => { %>
+            <iframe width="320" height="180" src="<%= video %>" frameborder="0" allowfullscreen></iframe>
+          <% }) %>
+        <% } else { %>
+          <p>Vídeos não encontrados.</p>
+        <% } %>
       </div>
+
     <% } else { %>
-      <p style="text-align:center;">Nenhum resultado encontrado.</p>
+      <p>Nenhum artista encontrado para sua busca.</p>
     <% } %>
 
-    <p style="text-align:center; margin-top:30px;">
-      <a href="/dashboard">Voltar ao dashboard</a>
-    </p>
-  </div>
+  </main>
 </body>
 </html>

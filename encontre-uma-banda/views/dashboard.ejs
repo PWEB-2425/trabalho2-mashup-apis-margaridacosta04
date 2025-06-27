@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body class="dashboard-body">
+
   <header>
     <h1>Bem-vindo, <%= user.username %>!</h1>
     <nav>
@@ -21,13 +22,15 @@
     </form>
 
     <% if (artistInfo) { %>
-      <!-- Renderiza info do artista -->
-      <section class="artist-info">
-        <img src="<%= artistInfo.image ? artistInfo.image : '/images/default-artist.png' %>" alt="Imagem do artista" />
-        <h2><%= artistInfo.name %></h2>
-        <p><%= artistInfo.bio %></p>
+      <section class="artist-details">
+        <img src="<%= artistInfo.image || '/images/default-artist.png' %>" alt="Foto do artista <%= artistInfo.name %>" />
+        <div class="artist-text">
+          <h2><%= artistInfo.name %></h2>
+          <p><%= artistInfo.bio || 'Biografia não disponível.' %></p>
+        </div>
       </section>
     <% } %>
   </main>
+
 </body>
 </html>
