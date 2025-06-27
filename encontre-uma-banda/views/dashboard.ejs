@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Encontre uma Banda</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Bem-vindo, <%= user.username %>!</h1>
+
+    <form action="/search/results" method="GET" class="search-box">
+      <input
+        type="text"
+        name="q"
+        placeholder="Digite o nome da banda ou artista"
+        required
+        autocomplete="off"
+      />
+      <button type="submit">Buscar</button>
+    </form>
+
+    <p><a href="/auth/logout">Sair</a></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-vindo ao Encontre uma Banda</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <a href="/">Encontre uma Banda</a>
+    </div>
+    <nav>
+      <ul>
+        <% if (user) { %>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/logout">Sair</a></li>
+        <% } else { %>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Registrar</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <h1>Bem-vindo ao Encontre uma Banda</h1>
+    <% if (user) { %>
+      <p>Olá, <%= user.username %>!</p>
+    <% } else { %>
+      <p>Faça login ou registre-se para começar a encontrar bandas.</p>
+    <% } %>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Encontre uma Banda. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>

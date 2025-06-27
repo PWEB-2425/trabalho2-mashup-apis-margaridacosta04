@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= artist ? artist.name : 'Resultados' %> - Encontre uma Banda</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <% if (error) { %>
+      <p style="color:#ff4d4d; text-align:center; margin-bottom:20px;"><%= error %></p>
+    <% } %>
+
+    <% if (artist) { %>
+      <div class="artist-header">
+        <% if (artistImage) { %>
+          <img src="<%= artistImage %>" alt="<%= artist.name %>" />
+        <% } else { %>
+          <div style="width:150px; height:150px; background:#333; border-radius:75px;"></div>
+        <% } %>
+        <h1><%= artist.name %></h1>
+      </div>
+
+      <h2>Vídeos</h2>
+      <div class="videos">
+        <% videos.forEach(video => { %>
+          <div class="video">
+            <iframe
+              src="https://www.youtube.com/embed/<%= video.id.videoId %>"
+              allowfullscreen
+              title="<%= video.snippet.title %>"
+            ></iframe>
+            <p><%= video.snippet.title %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p style="text-align:center;">Nenhum resultado encontrado.</p>
+    <% } %>
+
+    <p style="text-align:center; margin-top:30px;">
+      <a href="/dashboard">Voltar ao dashboard</a>
+    </p>
+  </div>
+</body>
+</html>
