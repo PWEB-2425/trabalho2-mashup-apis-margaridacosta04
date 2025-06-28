@@ -9,15 +9,14 @@ const path = require('path');
 
 const app = express();
 
-// Conexão MongoDB
+// Conexão com MongoDB
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
-  .then(() => console.log('MongoDB conectado'))
-  .catch(err => console.error('Erro ao conectar no MongoDB:', err));
+}).then(() => console.log('✅ MongoDB conectado'))
+  .catch(err => console.error('❌ Erro ao conectar no MongoDB:', err));
 
-// Configurações Express
+// Configurações do Express
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
@@ -30,33 +29,32 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-// Passport
+// Passport.js
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Middleware para passar user às views
+// Variável global do user para as views
 app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
 
-// Importar rotas
+// Rotas
 const authRoutes = require('./routes/auth');
 const searchRoutes = require('./routes/search');
 
 app.use('/auth', authRoutes);
 app.use('/search', searchRoutes);
 
-// Rota raiz
+// Rota principal
 app.get('/', (req, res) => {
-  res.render('index');
+  res.redirect('/auth/login');
 });
 
-// Middleware para proteger rotas
+// Middleware de autenticação
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated && req.isAuthenticated()) {
     return next();
@@ -64,13 +62,13 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/auth/login');
 }
 
-// Dashboard protegido (exemplo)
+// Rota protegida
 app.get('/dashboard', ensureAuthenticated, (req, res) => {
   res.render('dashboard', { user: req.user, artistInfo: null });
 });
 
-// Start server
+// Start do servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
